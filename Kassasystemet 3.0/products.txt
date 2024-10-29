@@ -1,0 +1,4 @@
+﻿ProductId,Name,Price,PriceType
+300,Bananas,20.0,per kilo
+301,Milk,15.0,per piece
+302,Apples,25.0,per kilo
