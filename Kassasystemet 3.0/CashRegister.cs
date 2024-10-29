@@ -22,7 +22,7 @@ namespace Kassasystemet_3._0
         public void NewCustomer()
         {
             shoppingCart.Clear();
-            Console.WriteLine("New customer session started.");
+            Console.WriteLine("Ny kund startad.");
         }
 
         public void AddProduct(int productId, int quantity)
@@ -38,11 +38,11 @@ namespace Kassasystemet_3._0
                 {
                     shoppingCart.Add(product, quantity);
                 }
-                Console.WriteLine($"{quantity} x {product.Name} added to the shopping cart.");
+                Console.WriteLine($"{quantity} x {product.Name} lagt i kundvagnen.");
             }
             else
             {
-                Console.WriteLine($"Product with ID {productId} not found.");
+                Console.WriteLine($"Produkten med ID {productId} hittades inte.");
             }
         }
 
@@ -51,6 +51,7 @@ namespace Kassasystemet_3._0
             
             Receipt receipt = new Receipt(shoppingCart);
             receipt.SaveReceipt();
+            receipt.DisplayReceipt();
             NewCustomer();
         }
     }

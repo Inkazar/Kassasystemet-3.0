@@ -53,15 +53,26 @@ namespace Kassasystemet_3._0
             string fileName = $"RECEIPT_{DateTime.Now:yyyyMMdd}.txt";
             using (StreamWriter writer = new StreamWriter(fileName, append: true))
             {
-                writer.WriteLine($"----- Receipt #{receiptNumber} -----");
+                writer.WriteLine($"----- Kvitto #{receiptNumber} -----");
                 foreach (var entry in items)
                 {
                     double price = entry.Key.GetCurrentPrice();
                     writer.WriteLine($"{entry.Value} x {entry.Key.Name} - {price} kr");
                 }
-                writer.WriteLine($"Total: {totalPrice} kr");
+                writer.WriteLine($"Totalt: {totalPrice} kr");
                 writer.WriteLine("---------------------------");
             }
+        }
+        public void DisplayReceipt()
+        {
+            Console.WriteLine($"\n----- Kvitto #{receiptNumber} -----");
+            foreach ( var entry in items)
+            {
+                double price = (double)entry.Key.GetCurrentPrice();
+                Console.WriteLine($"{entry.Value} x {entry.Key.Name} - {price} kr");
+            }
+            Console.WriteLine($"Totalt: {totalPrice} kr");
+            Console.WriteLine("---------------------------");
         }
     }
 
