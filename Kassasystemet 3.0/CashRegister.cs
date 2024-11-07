@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Kassasystemet_3._0
 {
-   
+
 
     public class CashRegister
     {
         private List<Product> products;
-        private Dictionary<Product, int> shoppingCart;
+        private List<CartItem> shoppingCart;
 
         public CashRegister(List<Product> products)
         {
             this.products = products;
-            this.shoppingCart = new Dictionary<Product, int>();
+            this.shoppingCart = new List<CartItem>();
         }
 
         public void NewCustomer()
@@ -31,13 +31,14 @@ namespace Kassasystemet_3._0
             Product product = products.Find(p => p.ProductId == productId);
             if (product != null)
             {
-                if (shoppingCart.ContainsKey(product))
+                CartItem existingItem = shoppingCart.Find(item => item.Product.ProductId == productId);
+                if (existingItem != null)
                 {
-                    shoppingCart[product] += quantity;
+                    existingItem.Quantity += quantity;
                 }
                 else
                 {
-                    shoppingCart.Add(product, quantity);
+                    shoppingCart.Add(new CartItem(product, quantity));
                 }
                 Console.WriteLine($"{quantity} x {product.Name} lagt i kundvagnen.");
             }
@@ -49,7 +50,7 @@ namespace Kassasystemet_3._0
 
         public void Pay()
         {
-            
+
             Receipt receipt = new Receipt(shoppingCart);
             receipt.SaveReceipt();
             receipt.DisplayReceipt();

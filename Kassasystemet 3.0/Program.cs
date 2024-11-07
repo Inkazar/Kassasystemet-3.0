@@ -18,17 +18,17 @@ public class Program
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("\nMain Menu:");
+            Console.WriteLine("Huvudmeny:");
             Console.WriteLine("1. Ny Kund");
             Console.WriteLine("2. Visa kvitton");
             Console.WriteLine("3. Admin Verktyg");
             Console.WriteLine("4. Avsluta");
             Console.Write("Välj alternativ: ");
 
-            int choice;
-            bool isNumber = int.TryParse(Console.ReadLine(), out choice);
+            
+           
 
-            if (isNumber)
+            if (int.TryParse(Console.ReadLine(), out int choice))
             {
                 switch (choice)
                 {
@@ -60,8 +60,6 @@ public class Program
         cashRegister.NewCustomer();
         while (true)
         {
-            
-            
             Console.WriteLine("Skriv kommando: (<ProduktID> <Antal> or PAY):");
             string command = Console.ReadLine().Trim();
             if (command.Equals("PAY", StringComparison.OrdinalIgnoreCase))
@@ -72,7 +70,9 @@ public class Program
             else
             {
                 string[] parts = command.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                if (parts.Length == 2 && int.TryParse(parts[0], out int productId) && int.TryParse(parts[1], out int quantity))
+                if (parts.Length == 2 && 
+                    int.TryParse(parts[0], out int productId) && 
+                    int.TryParse(parts[1], out int quantity))
                 {
                     cashRegister.AddProduct(productId, quantity);
                 }
@@ -96,13 +96,15 @@ public class Program
             string content = File.ReadAllText(fileName);
             Console.WriteLine($"\nKvitton för {date}:");
             Console.WriteLine(content);
+            Console.ReadLine();
         }
         
         else
         {
             Console.WriteLine($"Felaktigt format eller inga kvitton hittade för {date}");
+            Console.ReadLine();
         }
-        Console.ReadLine();
+        
     }
 
     private static void HandleAdminTools(AdminTool adminTool)
@@ -113,8 +115,7 @@ public class Program
             Console.WriteLine("\nAdmin Verktyg:");
             Console.WriteLine("1. Ändra Produkt");
             Console.WriteLine("2. Lägg till Produkt");
-            Console.WriteLine("3. Ändra kampanjer");
-            Console.WriteLine("4. Tillbaka till menyn");
+            Console.WriteLine("3. Tillbaka till menyn");
             Console.Write("Välj alternativ: ");
 
             int choice;
@@ -131,9 +132,6 @@ public class Program
                         adminTool.AddProduct();
                         break;
                     case 3:
-                        adminTool.ManageCampaigns();
-                        break;
-                    case 4:
                         return;
                     default:
                         Console.WriteLine("Felaktigt val, försök igen");

@@ -11,8 +11,8 @@ namespace Kassasystemet_3._0
         public int ProductId { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
-        public string PriceType { get; set; } 
-        public List<Campaign> Campaigns { get; private set; }
+        public string PriceType { get; set; }
+        
 
         public Product(int productId, string name, double price, string priceType)
         {
@@ -20,24 +20,15 @@ namespace Kassasystemet_3._0
             Name = name;
             Price = price;
             PriceType = priceType;
-            Campaigns = new List<Campaign>();
+            
         }
 
         public double GetCurrentPrice()
         {
-            foreach (Campaign campaign in Campaigns)
-            {
-                if (campaign.IsValid())
-                {
-                    return campaign.CampaignPrice;
-                }
-            }
+          
             return Price;
         }
 
-        public void AddCampaign(Campaign campaign)
-        {
-            Campaigns.Add(campaign);
-        }
+        
     }
 }

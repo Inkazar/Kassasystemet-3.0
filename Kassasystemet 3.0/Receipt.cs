@@ -11,12 +11,12 @@ namespace Kassasystemet_3._0
     {
         private static int latestReceiptNumber = ReadLatestReceiptNumber();
         private int receiptNumber;
-        private Dictionary<Product, int> items;
+        private List<CartItem> items;
         private double totalPrice;
 
-        public Receipt(Dictionary<Product, int> items)
+        public Receipt(List<CartItem> items)
         {
-            this.items = new Dictionary<Product, int>(items);
+            this.items = new List<CartItem>(items);
             this.receiptNumber = ++latestReceiptNumber;
             SaveLatestReceiptNumber();
             CalculateTotalPrice();
@@ -41,10 +41,11 @@ namespace Kassasystemet_3._0
 
         private void CalculateTotalPrice()
         {
-            foreach (var entry in items)
+            totalPrice = 0;
+            foreach (var item in items)
             {
-                double price = entry.Key.GetCurrentPrice();
-                totalPrice += price * entry.Value;
+                double price = item.Product.GetCurrentPrice();
+                totalPrice += price * item.Quantity;
             }
         }
 
@@ -54,10 +55,10 @@ namespace Kassasystemet_3._0
             using (StreamWriter writer = new StreamWriter(fileName, append: true))
             {
                 writer.WriteLine($"----- Kvitto #{receiptNumber} -----");
-                foreach (var entry in items)
+                foreach (var item in items)
                 {
-                    double price = entry.Key.GetCurrentPrice();
-                    writer.WriteLine($"{entry.Value} x {entry.Key.Name} - {price} kr");
+                    double price = item.Product.GetCurrentPrice();
+                    writer.WriteLine($"{item.Quantity} x {item.Product.Name} - {price} kr");
                 }
                 writer.WriteLine($"Totalt: {Math.Round(totalPrice, 2):F2} kr");
                 writer.WriteLine("---------------------------");
@@ -66,10 +67,10 @@ namespace Kassasystemet_3._0
         public void DisplayReceipt()
         {
             Console.WriteLine($"\n----- Kvitto #{receiptNumber} -----");
-            foreach ( var entry in items)
+            foreach ( var item in items)
             {
-                double price = (double)entry.Key.GetCurrentPrice();
-                Console.WriteLine($"{entry.Value} x {entry.Key.Name} - {price} kr");
+                double price = (double)item.Product.GetCurrentPrice();
+                Console.WriteLine($"{item.Quantity} x {item.Product.Name} - {price} kr");
             }
             
             Console.WriteLine($"Totalt: {Math.Round(totalPrice, 2):F2} kr");
