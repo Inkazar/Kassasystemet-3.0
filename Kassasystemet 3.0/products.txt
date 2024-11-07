@@ -1,5 +1,7 @@
-﻿ProductId,Name,Price,PriceType
-300,Bananas,20.0,per kilo
-301,Milk,15.0,per piece
-302,Apples,25.0,per kilo
-303,Grogg,120,per kilo
+ProduktId,Namn,Pis,Pristyp
+300,Bananer,20,per kilo
+301,Mjölk,15,per styck
+302,Äpplen,25,per kilo
+303,Grogg,120,per styck
+304,Öl,79.9,per styck
+305,Hundbajspåsar,40.4,per styck

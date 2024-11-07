@@ -11,8 +11,7 @@ namespace Kassasystemet_3._0
         public int ProductId { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
-        public string PriceType { get; set; } // "per kilo" or "per piece"
-
+        public string PriceType { get; set; } 
         public List<Campaign> Campaigns { get; private set; }
 
         public Product(int productId, string name, double price, string priceType)

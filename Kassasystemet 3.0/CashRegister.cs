@@ -21,6 +21,7 @@ namespace Kassasystemet_3._0
 
         public void NewCustomer()
         {
+            Console.Clear();
             shoppingCart.Clear();
             Console.WriteLine("Ny kund startad.");
         }

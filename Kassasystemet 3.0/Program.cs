@@ -17,12 +17,13 @@ public class Program
 
         while (true)
         {
+            Console.Clear();
             Console.WriteLine("\nMain Menu:");
-            Console.WriteLine("1. New Customer");
-            Console.WriteLine("2. View Receipts");
-            Console.WriteLine("3. Admin Tools");
-            Console.WriteLine("4. Exit");
-            Console.Write("Choose an option: ");
+            Console.WriteLine("1. Ny Kund");
+            Console.WriteLine("2. Visa kvitton");
+            Console.WriteLine("3. Admin Verktyg");
+            Console.WriteLine("4. Avsluta");
+            Console.Write("Välj alternativ: ");
 
             int choice;
             bool isNumber = int.TryParse(Console.ReadLine(), out choice);
@@ -41,15 +42,15 @@ public class Program
                         HandleAdminTools(adminTool);
                         break;
                     case 4:
-                        return; // Exit the program
+                        return; 
                     default:
-                        Console.WriteLine("Invalid choice. Try again.");
+                        Console.WriteLine("Felaktigt val, försök igen");
                         break;
                 }
             }
             else
             {
-                Console.WriteLine("Please enter a valid number.");
+                Console.WriteLine("Välj en giltig siffra");
             }
         }
     }
@@ -59,7 +60,9 @@ public class Program
         cashRegister.NewCustomer();
         while (true)
         {
-            Console.WriteLine("Enter command (<productId> <quantity> or PAY):");
+            
+            
+            Console.WriteLine("Skriv kommando: (<ProduktID> <Antal> or PAY):");
             string command = Console.ReadLine().Trim();
             if (command.Equals("PAY", StringComparison.OrdinalIgnoreCase))
             {
@@ -75,7 +78,7 @@ public class Program
                 }
                 else
                 {
-                    Console.WriteLine("Invalid command. Try again.");
+                    Console.WriteLine("Felaktig inmatining, försök igen");
                 }
             }
         }
@@ -83,7 +86,7 @@ public class Program
 
     private static void ViewReceipts()
     {
-        Console.WriteLine("Enter date for receipts to view (format: yyyyMMdd), or press Enter for today's date:");
+        Console.WriteLine("Skriv in datumet för kvittot du vill titta på (format: yyyyMMdd), eller tryck på enter för dagens datum:");
         string input = Console.ReadLine();
         string date = string.IsNullOrEmpty(input) ? DateTime.Now.ToString("yyyyMMdd") : input;
 
@@ -91,25 +94,28 @@ public class Program
         if (File.Exists(fileName))
         {
             string content = File.ReadAllText(fileName);
-            Console.WriteLine($"\nReceipts for {date}:");
+            Console.WriteLine($"\nKvitton för {date}:");
             Console.WriteLine(content);
         }
+        
         else
         {
-            Console.WriteLine($"No receipts found for date {date}.");
+            Console.WriteLine($"Felaktigt format eller inga kvitton hittade för {date}");
         }
+        Console.ReadLine();
     }
 
     private static void HandleAdminTools(AdminTool adminTool)
     {
         while (true)
         {
-            Console.WriteLine("\nAdmin Tools:");
-            Console.WriteLine("1. Edit Product");
-            Console.WriteLine("2. Add Product");
-            Console.WriteLine("3. Manage Campaigns");
-            Console.WriteLine("4. Back to Main Menu");
-            Console.Write("Choose an option: ");
+            Console.Clear();
+            Console.WriteLine("\nAdmin Verktyg:");
+            Console.WriteLine("1. Ändra Produkt");
+            Console.WriteLine("2. Lägg till Produkt");
+            Console.WriteLine("3. Ändra kampanjer");
+            Console.WriteLine("4. Tillbaka till menyn");
+            Console.Write("Välj alternativ: ");
 
             int choice;
             bool isNumber = int.TryParse(Console.ReadLine(), out choice);
@@ -128,15 +134,15 @@ public class Program
                         adminTool.ManageCampaigns();
                         break;
                     case 4:
-                        return; // Back to main menu
+                        return;
                     default:
-                        Console.WriteLine("Invalid choice. Try again.");
+                        Console.WriteLine("Felaktigt val, försök igen");
                         break;
                 }
             }
             else
             {
-                Console.WriteLine("Please enter a valid number.");
+                Console.WriteLine("Välj en giltig siffra");
             }
         }
     }

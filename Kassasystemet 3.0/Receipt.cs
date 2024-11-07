@@ -59,7 +59,7 @@ namespace Kassasystemet_3._0
                     double price = entry.Key.GetCurrentPrice();
                     writer.WriteLine($"{entry.Value} x {entry.Key.Name} - {price} kr");
                 }
-                writer.WriteLine($"Totalt: {totalPrice} kr");
+                writer.WriteLine($"Totalt: {Math.Round(totalPrice, 2):F2} kr");
                 writer.WriteLine("---------------------------");
             }
         }
@@ -71,8 +71,10 @@ namespace Kassasystemet_3._0
                 double price = (double)entry.Key.GetCurrentPrice();
                 Console.WriteLine($"{entry.Value} x {entry.Key.Name} - {price} kr");
             }
-            Console.WriteLine($"Totalt: {totalPrice} kr");
+            
+            Console.WriteLine($"Totalt: {Math.Round(totalPrice, 2):F2} kr");
             Console.WriteLine("---------------------------");
+            Console.ReadKey();
         }
     }
 

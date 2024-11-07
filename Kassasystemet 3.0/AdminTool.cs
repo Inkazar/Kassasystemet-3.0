@@ -20,79 +20,79 @@ namespace Kassasystemet_3._0
 
         public void EditProduct()
         {
-            Console.WriteLine("Enter the Product ID to edit:");
+            Console.WriteLine("Skriv in ProduktID du vill ändra:");
             if (int.TryParse(Console.ReadLine(), out int productId))
             {
                 Product product = products.Find(p => p.ProductId == productId);
                 if (product != null)
                 {
-                    Console.WriteLine($"Current name: {product.Name}, price: {product.Price}");
-                    Console.WriteLine("Enter new name (or press Enter to keep current):");
+                    Console.WriteLine($"Namn: {product.Name}, Pris: {product.Price}");
+                    Console.WriteLine("Skriv in det nya namnet (eller tryck på Enter för att behålla det gamla1):");
                     string newName = Console.ReadLine();
                     if (!string.IsNullOrEmpty(newName))
                     {
                         product.Name = newName;
                     }
-                    Console.WriteLine("Enter new price (or press Enter to keep current):");
+                    Console.WriteLine("Mata in det nya priset (eller tryck på enter för att behålla det gamla):");
                     string newPriceInput = Console.ReadLine();
                     if (double.TryParse(newPriceInput, out double newPrice))
                     {
                         product.Price = newPrice;
                     }
-                    Console.WriteLine("Product has been updated.");
+                    Console.WriteLine("Produkten är uppdaterad.");
 
-                    // Save all products to file
+                   
                     productRepository.SaveProducts(products);
                 }
                 else
                 {
-                    Console.WriteLine("Product not found.");
+                    Console.WriteLine("Produkten hittades inte.");
                 }
             }
             else
             {
-                Console.WriteLine("Invalid Product ID.");
+                Console.WriteLine("Felaktigt Produkt ID.");
             }
         }
 
         public void AddProduct()
         {
-            Console.WriteLine("Enter Product ID:");
+            Console.WriteLine("Mata in Produkt ID:");
             if (int.TryParse(Console.ReadLine(), out int productId))
             {
                 if (products.Exists(p => p.ProductId == productId))
                 {
-                    Console.WriteLine("A product with this ID already exists.");
+                    Console.WriteLine("En produkt med det här ID't finns redan.");
                     return;
                 }
-                Console.WriteLine("Enter name:");
+                Console.WriteLine("Skriv in namnet:");
                 string name = Console.ReadLine();
-                Console.WriteLine("Enter price:");
+                Console.WriteLine("Skriv in priset:");
                 if (double.TryParse(Console.ReadLine(), out double price))
                 {
-                    Console.WriteLine("Enter price type (per kilo/per piece):");
+                    Console.WriteLine("Skriv in pristypen (per kilo/per styck):");
                     string priceType = Console.ReadLine();
                     Product newProduct = new Product(productId, name, price, priceType);
                     products.Add(newProduct);
-                    Console.WriteLine("Product has been added.");
+                    Console.WriteLine("Produkten är tillagd.");
 
                     // Save the new product to file
                     productRepository.AddProduct(newProduct);
                 }
                 else
                 {
-                    Console.WriteLine("Invalid price.");
+                    Console.WriteLine("Felaktigt pris.");
                 }
             }
             else
             {
-                Console.WriteLine("Invalid Product ID.");
+                Console.WriteLine("Felaktigt Produkt ID.");
             }
         }
 
         public void ManageCampaigns()
         {
-            Console.WriteLine("Enter the Product ID to manage campaigns for:");
+            Console.WriteLine("Skriv in Produkt ID't som du vill ändra administrera kampanjen för:");
             if (int.TryParse(Console.ReadLine(), out int productId))
             {
                 Product product = products.Find(p => p.ProductId == productId);
@@ -100,12 +100,13 @@ namespace Kassasystemet_3._0
                 {
                     while (true)
                     {
-                        Console.WriteLine($"\nCampaign management for {product.Name}:");
-                        Console.WriteLine("1. Add Campaign");
-                        Console.WriteLine("2. Remove Campaign");
-                        Console.WriteLine("3. View Campaigns");
-                        Console.WriteLine("4. Back to Admin Menu");
-                        Console.Write("Choose an option: ");
+                        
+                        Console.WriteLine($"\nKampanjen för {product.Name}:");
+                        Console.WriteLine("1. Lägg till kampanj");
+                        Console.WriteLine("2. Ta bort kampanj");
+                        Console.WriteLine("3. Visa kampanjer");
+                        Console.WriteLine("4. Tillbaka till menyn");
+                        Console.Write("Välj alternativ: ");
 
                         int choice;
                         bool isNumber = int.TryParse(Console.ReadLine(), out choice);
@@ -126,55 +127,55 @@ namespace Kassasystemet_3._0
                                 case 4:
                                     return; // Back to admin menu
                                 default:
-                                    Console.WriteLine("Invalid choice. Try again.");
+                                    Console.WriteLine("Felaktigt val, försök igen");
                                     break;
                             }
                         }
                         else
                         {
-                            Console.WriteLine("Please enter a valid number.");
+                            Console.WriteLine("Välj en giltig siffra");
                         }
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Product not found.");
+                    Console.WriteLine("Produkten hittades inte");
                 }
             }
             else
             {
-                Console.WriteLine("Invalid Product ID.");
+                Console.WriteLine("Felaktigt Produkt ID.");
             }
         }
 
         private void AddCampaign(Product product)
         {
-            Console.WriteLine("Enter start date (format: yyyy-MM-dd):");
+            Console.WriteLine("Skriv in startdatum (format: yyyy-MM-dd):");
             if (DateTime.TryParse(Console.ReadLine(), out DateTime startDate))
             {
-                Console.WriteLine("Enter end date (format: yyyy-MM-dd):");
+                Console.WriteLine("Skriv in slutdatum (format: yyyy-MM-dd):");
                 if (DateTime.TryParse(Console.ReadLine(), out DateTime endDate))
                 {
-                    Console.WriteLine("Enter campaign price:");
+                    Console.WriteLine("Mata in kampanj priset:");
                     if (double.TryParse(Console.ReadLine(), out double campaignPrice))
                     {
                         Campaign campaign = new Campaign(startDate, endDate, campaignPrice);
                         product.AddCampaign(campaign);
-                        Console.WriteLine("Campaign has been added.");
+                        Console.WriteLine("Kampanjen har lagts till.");
                     }
                     else
                     {
-                        Console.WriteLine("Invalid campaign price.");
+                        Console.WriteLine("Felaktigt kampanj pris.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Invalid end date.");
+                    Console.WriteLine("Felaktigt slutdatum.");
                 }
             }
             else
             {
-                Console.WriteLine("Invalid start date.");
+                Console.WriteLine("Felaktigt startdatum.");
             }
         }
 
@@ -182,36 +183,36 @@ namespace Kassasystemet_3._0
         {
             if (product.Campaigns.Count == 0)
             {
-                Console.WriteLine("No campaigns to remove.");
+                Console.WriteLine("Det finns ingen kampanj att ta bort.");
                 return;
             }
 
             ViewCampaigns(product);
-            Console.WriteLine("Enter the number of the campaign to remove:");
+            Console.WriteLine("Skriv in numret på kampanjen du vill ta bort:");
             if (int.TryParse(Console.ReadLine(), out int index))
             {
                 if (index >= 1 && index <= product.Campaigns.Count)
                 {
                     product.Campaigns.RemoveAt(index - 1);
-                    Console.WriteLine("Campaign has been removed.");
+                    Console.WriteLine("Kampnajen har tagits bort.");
                 }
                 else
                 {
-                    Console.WriteLine("Invalid number.");
+                    Console.WriteLine("Felaktigt nummer.");
                 }
             }
             else
             {
-                Console.WriteLine("Please enter a valid number.");
+                Console.WriteLine("Det var ingen siffra.");
             }
         }
 
         private void ViewCampaigns(Product product)
         {
-            Console.WriteLine($"\nCampaigns for {product.Name}:");
+            Console.WriteLine($"\nKampanjer för {product.Name}:");
             if (product.Campaigns.Count == 0)
             {
-                Console.WriteLine("No campaigns.");
+                Console.WriteLine("Inga kampanjer.");
             }
             else
             {
